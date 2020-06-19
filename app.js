@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 
 
 app.get("/", function (req, res){
-
+    res.sendFile(__dirname + '/views/index.html');
 });
 
 app.get("/user", function (req, res){
