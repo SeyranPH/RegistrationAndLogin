@@ -14,7 +14,7 @@ const db = {
         userToSession: {}
     }
 };
-
+app.use(express.static(__dirname + "/public"));
 app.use(urlencodedParser);
 app.use(bodyParser.json());
 
