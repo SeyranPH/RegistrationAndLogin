@@ -18,9 +18,24 @@ const db = {
 app.use(urlencodedParser);
 app.use(bodyParser.json());
 
-app.post("/user", function callback(req, res){
 
-    //store password hash instead of password, use bcrypt, esi 1
+app.get("/", function (req, res){
+
+});
+
+app.get("/user", function (req, res){
+
+});
+
+app.get("/session", function (req, res){
+
+});
+
+app.get("/product", function (req, res){
+
+});
+
+app.post("/user", function callback(req, res){
     console.log("created user with name" + req.body.username);
     console.log(req.body);
     bcrypt.hash(req.body.password, 5, function (err, hash){
@@ -34,17 +49,20 @@ app.post("/session", function callback(req, res){
         res.sendStatus(401);
         return;
     }
+    bcrypt.compare(req.body.password, db.users[req.body.username], function (err, result){
+        if (!result){
+            res.sendStatus(401);    
+        }
+        else {
+            const sessionToken = uuid(); 
+            db.sessions.userToSession[req.body.username] = sessionToken;
+            db.sessions.sessionToUser[sessionToken] = req.body.username;
+            res.setHeader("content-type", "application/json");
+            res.end(JSON.stringify({sessions: sessionToken}));
+        }
+    });
+
     
-    if (db.users[req.body.username]!==req.body.password){
-        res.sendStatus(401);    
-    }
-    else {
-        const sessionToken = uuid(); 
-        db.sessions.userToSession[req.body.username] = sessionToken;
-        db.sessions.sessionToUser[sessionToken] = req.body.username;
-        res.setHeader("content-type", "application/json");
-        res.end(JSON.stringify({sessions: sessionToken}));
-    }
 });
 
 app.get("/product", function(req, res){
