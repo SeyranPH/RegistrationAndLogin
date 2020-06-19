@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="userForm">
+      <form action="/session" method="POST">
+        <div>
+          <label for="username">Username:</label>
+          <input
+            placeholder="username..."
+            type="text"
+            name="username"
+            v-model="username"
+          />
+        </div>
+        <div>
+          <label for="password">Password:</label>
+          <input
+            placeholder="password..."
+            type="password"
+            name="password"
+            v-model="password"
+            onclick="{}"
+          />
+        </div>
+        <input type="submit" value="LogIn" />
+      </form>
+    </div>
+  </body>
+  <script>
+    var app = new Vue({
+      el: "#userForm",
+      data: {
+        username: "",
+        password: "",
+      },
+    });
+  </script>
+</html>
